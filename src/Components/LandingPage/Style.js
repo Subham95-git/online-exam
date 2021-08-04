@@ -41,6 +41,10 @@ export default makeStyles((theme) =>({
     background:"#d19004",
     color:"#ffffff",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
   media: {
     height: 150,
   },

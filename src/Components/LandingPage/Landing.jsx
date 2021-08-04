@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Grid,
   Card,
@@ -8,15 +8,28 @@ import {
   Typography,
   CardMedia,
 } from "@material-ui/core";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import style from "./Style";
 import teacher from "../../Resources/teacher.png";
 import student from "../../Resources/student.png";
+import Register from '../Register/Register';
+import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+
 
 export const Landing = () => {
   const classes = style();
+
+  const clickHandler=(str)=>{
+    if(str==="teacher"){
+      ReactDOM.render(<Register name="teacher"/>, document.getElementById('root'));
+    }else{
+      ReactDOM.render(<Register name="stdent"/>, document.getElementById('root'));
+    }
+    
+  }
+
   return (
+   
     <main className={classes.content}>
       <div className={classes.toolbar} />
 
@@ -43,17 +56,21 @@ export const Landing = () => {
               <Button
                 className={classes.button1}
                 size="medium"
-                startIcon={<LockOpenIcon />}
+               
               >
                 Login
               </Button>
+              
               <Button
                 className={classes.button2}
                 size="medium"
-                startIcon={<VpnKeyIcon />}
+              //  href="/register1"
+                onClick={clickHandler}
               >
-                Sign up
+                Register
               </Button>
+              
+        
             </CardActions>
           </Card>
         </Grid>
@@ -80,23 +97,36 @@ export const Landing = () => {
               <Button
                 className={classes.button1}
                 size="medium"
-                startIcon={<LockOpenIcon />}
+                
               >
                 Login
               </Button>
               <Button
                 className={classes.button2}
                 size="medium"
-                startIcon={<VpnKeyIcon />}
+               // href="/register2"
+                onClick={clickHandler}
               >
-                Sign up
+                Register
               </Button>
             </CardActions>
           </Card>
         </Grid>
       </Grid>
+     
+    {/* <Router>
+     <Switch>
+       <Route exact path="/register1" component={Register}></Route>
+     </Switch>
+     </Router> */}
     </main>
+
+    
+   
   );
 };
+
+
+
 
 export default Landing;
