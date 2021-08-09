@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import {Button,TextField, Typography} from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import {Snackbar,Button,TextField, Typography} from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 import useStyles from './style';
 
@@ -10,6 +11,29 @@ const Form = (props,{ handleClose }) => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+    const [open, setOpen] = React.useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(false);
+
+    useEffect(()=>{
+      setSuccess(false);
+      setError(false);
+    },[])
+
+  const handleClickpop = () => {
+    setOpen(true);
+  };
+
+  const handleClosepop = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  
   
     const handleSubmit = e => {
       e.preventDefault();
@@ -19,6 +43,7 @@ const Form = (props,{ handleClose }) => {
   
     return (
       <form className={classes.root} onSubmit={handleSubmit}>
+        
         <Typography variant="h5" component="h2">
                   Sign Up
                 </Typography>
@@ -52,14 +77,43 @@ const Form = (props,{ handleClose }) => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
+        <TextField
+          label="Confirm Password"
+          variant="filled"
+          type="password"
+          required
+          value={confirmPass}
+          onChange={e=>{
+            setConfirmPass(e.target.value);
+            setOpen(true);
+
+            if(password===e.target.value){
+              console.log('matched');
+              setSuccess(true);
+              setError(false);
+            }
+            else{
+              console.log('not matched');
+              setSuccess(false);
+              setError(true);
+            }
+          }}
+        />
+        {error && 
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClosepop}>
+        <Alert variant="filled" onClose={handleClosepop} severity="error" className={classes.alert}>Password not matched</Alert></Snackbar>}
+        {success && 
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClosepop}>
+        <Alert variant="filled"  onClose={handleClosepop} severity="success"> Password matched</Alert></Snackbar>}
         <div>
-          <Button variant="contained" onClick={handleClose} href='/'>
-            Cancel
-          </Button>
+          
           <Button type="submit" variant="contained" color="primary">
             Signup
           </Button>
           
+          <Button variant="contained" onClick={handleClose} href='/'>
+            Cancel
+          </Button>
         </div>
       </form>
       

@@ -6,12 +6,14 @@ export default makeStyles((theme) =>({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.background.secondary,
     padding: theme.spacing(3),
+    
   },
   root: {
     maxWidth: '100%',
     background: '#ffffff',
+    
   },
   bullet: {
     display: 'inline-block',
@@ -48,5 +50,11 @@ export default makeStyles((theme) =>({
   media: {
     height: 150,
   },
+  description: {
+    height: 60,
+  },
+  popover: {
+    maxWidth: '100%',
+  }
 }));
 
